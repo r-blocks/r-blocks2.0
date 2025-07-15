@@ -1,0 +1,31 @@
+name: Prettier Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        
+    - name: Install dependencies
+      run: |
+        rm -rf node_modules
+        rm package-lock.json 
+        npm install
+    
+    - name: Format with prettier
+      run: npm run format
+
+    - name: Check formatting
+      run: npm run format:check
